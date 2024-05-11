@@ -37,7 +37,7 @@ Perfil - {{ usuario.username }}
 <div class="conteudo">
 {% for photo in usuario.photos %}
     <div class="bloco-imagem">
-          <img src="{{ url_for('static', filename='photos_posts/{}'.format(photo.imagem)) }}" />
+          <img src="{{ url_for('custom_static', filename='{}'.format(photo.imagem)) }}" />
 
 </div>
 {% endfor %}

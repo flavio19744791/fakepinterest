@@ -8,7 +8,7 @@ app = Flask(__name__)
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SECRET_KEY"] = "037916700e5650d9762559c66abc1252"
-app.config["UPLOAD_FOLDER"] = "static/photos_posts"
+app.config["UPLOAD_FOLDER"] = "/photos_posts"
 
 database = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

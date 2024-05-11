@@ -1,5 +1,5 @@
 #cria rotas para o site
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, send_from_directory
 
 from fakepinterest import app, database, bcrypt
 
@@ -41,6 +41,11 @@ def criar_conta():
 
     return render_template("criarconta.html", form=form_criarconta)
 
+@app.route("/uploads/<path:filename>")
+def custom_static(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename, as_attachment=True)
+
+
 
 @app.route("/perfil/<id_usuario>", methods=["GET", "POST"])
 @login_required
@@ -53,8 +58,9 @@ def perfil(id_usuario):
             arquivo = form_photo.photo.data
             nome_seguro = secure_filename(arquivo.filename)
             #salvar o arquivo na pasta photo_post
-            caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                                   app.config["UPLOAD_FOLDER"], nome_seguro)
+            caminho = os.path.join(app.config["UPLOAD_FOLDER"], nome_seguro)
+            #caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                 #  app.config["UPLOAD_FOLDER"], nome_seguro)
             arquivo.save(caminho)
 
         #registrar esse arquivo no banco de dados
